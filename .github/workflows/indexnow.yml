@@ -1,0 +1,38 @@
+name: Ping IndexNow on publish
+
+# Notifies Bing (and other IndexNow-participating engines) whenever new/changed
+# pages are pushed to main. Requires a repo secret INDEXNOW_KEY (see README).
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Submit changed URLs to IndexNow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          HOST: example.com   # <-- replace with your real domain
+        run: |
+          set -e
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- '*.html' | sed 's|/index.html$|/|' | sed 's|^|https://'"$HOST"'/|')
+          if [ -z "$CHANGED" ]; then
+            echo "No HTML changes to submit."
+            exit 0
+          fi
+          URL_LIST=$(echo "$CHANGED" | jq -R . | jq -s .)
+          curl -s -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "host": "'"$HOST"'",
+              "key": "'"$INDEXNOW_KEY"'",
+              "keyLocation": "https://'"$HOST"'/'"$INDEXNOW_KEY"'.txt",
+              "urlList": '"$URL_LIST"'
+            }'
