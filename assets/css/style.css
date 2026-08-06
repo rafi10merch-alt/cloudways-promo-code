@@ -7,27 +7,27 @@
    ========================================================= */
 :root {
   /* color */
-  --bg: #f6f7f9;
+  --bg: #f8fafc;
   --surface: #ffffff;
-  --ink: #10182b;
-  --ink-soft: #4a5468;
-  --navy: #101a33;
-  --navy-soft: #1c2947;
-  --teal: #0ea5a0;
-  --teal-dark: #0b7f7b;
-  --amber: #f5a524;
-  --amber-ink: #6b4400;
-  --line: #e3e6ec;
-  --line-dark: #2a3554;
-  --danger: #d64545;
+  --ink: #0f172a;
+  --ink-soft: #475569;
+  --navy: #0b1120;
+  --navy-soft: #1e293b;
+  --teal: #14b8a6;
+  --teal-dark: #0f766e;
+  --amber: #f59e0b;
+  --amber-ink: #78350f;
+  --line: #e2e8f0;
+  --line-dark: #334155;
+  --danger: #ef4444;
 
   /* type */
-  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-display: "Outfit", "Inter", system-ui, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   /* scale */
-  --radius: 3px;
+  --radius: 8px;
   --max: 1180px;
 }
 
@@ -159,13 +159,14 @@ nav.mobile-nav a {
   font-weight: 700; font-size: 0.95rem;
   padding: 13px 22px; border-radius: var(--radius);
   border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
 }
-.btn-primary { background: var(--teal); color: var(--navy); }
-.btn-primary:hover { background: #12c4bd; text-decoration: none; }
+.btn-primary { background: var(--teal); color: var(--navy); box-shadow: 0 4px 6px -1px rgba(20, 184, 166, 0.2), 0 2px 4px -1px rgba(20, 184, 166, 0.1); }
+.btn-primary:hover { background: #0d9488; transform: translateY(-1px); box-shadow: 0 6px 8px -1px rgba(20, 184, 166, 0.3); text-decoration: none; }
 .btn-ghost { background: transparent; color: #fff; border-color: var(--line-dark); }
-.btn-ghost:hover { border-color: #fff; text-decoration: none; }
-.btn-amber { background: var(--amber); color: var(--amber-ink); }
-.btn-amber:hover { background: #ffb444; text-decoration: none; }
+.btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.05); text-decoration: none; }
+.btn-amber { background: var(--amber); color: var(--amber-ink); box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.2); }
+.btn-amber:hover { background: #d97706; transform: translateY(-1px); text-decoration: none; }
 
 /* =========================== TERMINAL / PROMO CODE BOX =========================== */
 /* Signature element: coupon presented as a server console readout,
@@ -215,6 +216,12 @@ section.alt { background: var(--surface); border-top: 1px solid var(--line); bor
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 24px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  border-color: #cbd5e1;
 }
 .card .num {
   font-family: var(--font-mono); color: var(--teal-dark);
