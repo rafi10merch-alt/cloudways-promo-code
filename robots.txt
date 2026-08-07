@@ -1,5 +1,5 @@
 # CloudSavings — robots.txt
-# Replace https://example.com with your real GitHub Pages / custom domain before launch.
+# Site is served from https://rafi10merch-alt.github.io/cloudways-promo-code/ (GitHub Pages project page).
 
 User-agent: *
 Allow: /
@@ -9,4 +9,4 @@ Disallow: /assets/js/
 Disallow: /*?*utm_
 Disallow: /search/
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://rafi10merch-alt.github.io/cloudways-promo-code/sitemap.xml

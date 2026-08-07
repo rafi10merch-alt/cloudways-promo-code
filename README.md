@@ -74,7 +74,7 @@ Home
 1. Create a new GitHub repo, push everything in this folder to the root of the `main` branch (or `/docs` if you prefer — adjust Pages settings accordingly).
 2. Repo → Settings → Pages → Source: `main` branch, `/ (root)`.
 3. If using a custom domain, add a `CNAME` file at the root containing just your domain, and configure DNS (A records to GitHub's IPs, or a CNAME record if using a subdomain).
-4. **Before going live, find-and-replace `example.com` with your real domain** across `index.html`, all page `<link rel="canonical">` and `og:url` tags, `robots.txt`, `sitemap.xml`, and the IndexNow workflow's `HOST` variable.
+4. **This build is already configured for `https://rafi10merch-alt.github.io/cloudways-promo-code/`** — every internal link, the canonical/og URLs, `manifest.json`, `robots.txt`, `sitemap.xml`, and the IndexNow workflow's `HOST`/`BASE_PATH` variables are set to that repo's project-page path. If you ever rename the repo to exactly `rafi10merch-alt.github.io` (making it a user page served at the domain root instead of a subpath), you'll need to strip the `/cloudways-promo-code` prefix from all of the above.
 
 GitHub Pages serves everything over HTTPS automatically once a domain is configured — no separate SSL step needed.
 

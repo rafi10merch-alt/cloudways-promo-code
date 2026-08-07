@@ -1,38 +1,56 @@
-name: Ping IndexNow on publish
+name: IndexNow ping
 
-# Notifies Bing (and other IndexNow-participating engines) whenever new/changed
-# pages are pushed to main. Requires a repo secret INDEXNOW_KEY (see README).
+# Pings api.indexnow.org (Bing + partners) whenever HTML files change on main.
+# Setup required before this works — see README.md section 4:
+#   1. Generate a key: openssl rand -hex 16
+#   2. Create a file at the site root named <key>.txt containing just the key
+#   3. Add repo secret INDEXNOW_KEY with that same key
+#   4. Replace HOST below with your real domain
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - '**/*.html'
-      - 'sitemap.xml'
 
 jobs:
   indexnow:
     runs-on: ubuntu-latest
+    env:
+      HOST: rafi10merch-alt.github.io
+      BASE_PATH: /cloudways-promo-code   # project page subpath — remove this if you later move to a user-page repo
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
-      - name: Submit changed URLs to IndexNow
-        env:
-          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
-          HOST: example.com   # <-- replace with your real domain
+      - name: Find changed HTML files
+        id: changed
         run: |
-          set -e
-          CHANGED=$(git diff --name-only HEAD~1 HEAD -- '*.html' | sed 's|/index.html$|/|' | sed 's|^|https://'"$HOST"'/|')
-          if [ -z "$CHANGED" ]; then
-            echo "No HTML changes to submit."
-            exit 0
+          FILES=$(git diff --name-only HEAD^ HEAD -- '*.html' | sed "s#^#https://${HOST}${BASE_PATH}/#" | sed 's#index\.html$##')
+          if [ -z "$FILES" ]; then
+            echo "no_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "no_changes=false" >> "$GITHUB_OUTPUT"
+            printf '%s\n' "$FILES" > urls.txt
+            cat urls.txt
           fi
-          URL_LIST=$(echo "$CHANGED" | jq -R . | jq -s .)
+
+      - name: Submit to IndexNow
+        if: steps.changed.outputs.no_changes == 'false'
+        run: |
+          URL_JSON=$(python3 -c "
+import json
+with open('urls.txt') as f:
+    urls = [l.strip() for l in f if l.strip()]
+print(json.dumps(urls))
+")
           curl -s -X POST "https://api.indexnow.org/indexnow" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "host": "'"$HOST"'",
-              "key": "'"$INDEXNOW_KEY"'",
-              "keyLocation": "https://'"$HOST"'/'"$INDEXNOW_KEY"'.txt",
-              "urlList": '"$URL_LIST"'
-            }'
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "{
+              \"host\": \"${HOST}\",
+              \"key\": \"${{ secrets.INDEXNOW_KEY }}\",
+              \"keyLocation\": \"https://${HOST}/${{ secrets.INDEXNOW_KEY }}.txt\",
+              \"urlList\": ${URL_JSON}
+            }"
