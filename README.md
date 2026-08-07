@@ -184,3 +184,12 @@ Add one of: Google Analytics 4, Plausible, or Microsoft Clarity (session recordi
 - The affiliate disclosure appears both sitewide (footer) and inline on the two pages closest to the CTA (homepage, promo-code page).
 
 If you later get an actual Cloudways-issued discount code (as opposed to referral credit), update the promo-code page's copy and FAQ schema together — don't let them drift out of sync.
+
+---
+
+## 15. Update log — promo code & global geo-SEO (added after initial build)
+
+- **Promo code `Rafok89`** is now live on the homepage, `/cloudways/promo-code/`, `/cloudways/pricing/`, `/cloudways/vs-hostinger/`, and `/cloudways/free-trial/`. It's framed honestly as a referral code (not a percentage discount we can't verify) — if you confirm a specific welcome-credit amount from your Cloudways affiliate dashboard, update the copy on `/cloudways/promo-code/` and its FAQ schema together, per the guardrail above.
+- **Global hreflang targeting** added to every page's `<head>`: `en-us`, `en-gb`, `en-ca`, `en-au`, `en-ie`, `en-za`, and `x-default`, all self-referencing (same English content served to multiple English-speaking regions — US, Canada, UK, Ireland, Australia, South Africa, and by extension Europe's large English-reading audience). This avoids duplicate-content penalties while signaling international relevance instead of defaulting to a single-country assumption.
+- **Organization schema** on the homepage now includes `areaServed: ["US", "CA", "GB", "AU", "IE", "ZA", "Europe"]`.
+- If you later build genuinely localized pages (translated content, local currency, local payment methods) for a specific country, follow the country-page guidance already in `content-roadmap.md` rather than just swapping hreflang — thin, near-duplicate country pages hurt more than they help.
