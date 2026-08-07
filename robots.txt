@@ -1,5 +1,5 @@
 # CloudSavings — robots.txt
-# Site is served from https://rafi10merch-alt.github.io/cloudways-promo-code/ (GitHub Pages project page).
+# Site is served from https://www.cloudwys.musetrend.com/ (GitHub Pages project page).
 
 User-agent: *
 Allow: /
@@ -9,4 +9,4 @@ Disallow: /assets/js/
 Disallow: /*?*utm_
 Disallow: /search/
 
-Sitemap: https://rafi10merch-alt.github.io/cloudways-promo-code/sitemap.xml
+Sitemap: https://www.cloudwys.musetrend.com/sitemap.xml
